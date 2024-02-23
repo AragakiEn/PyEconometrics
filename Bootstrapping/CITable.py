@@ -39,7 +39,7 @@ def bs_fun(df: pd.DataFrame, var_names: list, n_sample: int=10000, bs_type: str=
     - pd.DataFrame: Output table for confidence interval.
     """
     # Determine optimal block length for the stationary bootstrap.
-    (length_stationary, length_circular) = tuple(optimal_block_length(da[var_names]).max().values)
+    (length_stationary, length_circular) = tuple(optimal_block_length(df[var_names]).max().values)
     
     # Perform bootstrap depending on the specified type and calculate confidence intervals.
     if bs_type == 's':
@@ -60,6 +60,6 @@ def bs_fun(df: pd.DataFrame, var_names: list, n_sample: int=10000, bs_type: str=
     return pd.DataFrame({'lower': confidence_interval[0], 'upper': confidence_interval[1]})
 
 # Example usage 
-# da is a DataFrame with columns ['X1', 'X2'], type is a group index variable
-# stationary_bs_df = da.groupby(['type']).apply(lambda x: bs_fun(x, var_names=['X1', 'X2'], n_sample=10000, bs_type='s'))
+# df is a DataFrame with columns ['X1', 'X2'], type is a group index variable
+# stationary_bs_df = df.groupby(['type']).apply(lambdf x: bs_fun(x, var_names=['X1', 'X2'], n_sample=10000, bs_type='s'))
 # stationary_bs_df = stationary_bs_df.reset_index().drop(columns='level_1') 
